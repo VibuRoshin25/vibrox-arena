@@ -19,11 +19,11 @@
     "proto": "pbjs -t static-module -w commonjs -o proto/auth_pb.js proto/auth.proto && pbts -o proto/auth_pb.d.ts proto/auth_pb.js"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.13.5",
-    "google-protobuf": "^3.21.4",
-    "jsonwebtoken": "^9.0.2",
+    "@grpc/grpc-js": "^1.14.4",
+    "google-protobuf": "^4.0.2",
+    "jsonwebtoken": "^9.0.3",
     "present": "^1.0.0",
-    "protobufjs": "^7.6.4",
+    "protobufjs": "^8.7.1",
     "scripts": "^0.1.0"
   },
   "allowScripts": {

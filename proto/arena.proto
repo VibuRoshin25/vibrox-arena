@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package arena;
+
+option go_package = "github.com/VibuRoshin25/vibrox-arena/proto;arenapb";
+
+service Arena {
+  rpc PlayMove(PlayMoveRequest) returns (PlayMoveResponse);
+}
+
+message PlayMoveRequest {
+  repeated string board = 1;
+  int32 position = 2;
+  string human_mark = 3;
+}
+
+message PlayMoveResponse {
+  repeated string board = 1;
+  int32 bot_position = 2;
+  string outcome = 3;
+  string strategy = 4;
+  int32 score = 5;
+  int32 nodes_evaluated = 6;
+  int32 search_depth = 7;
+  int64 decision_time_micros = 8;
+}

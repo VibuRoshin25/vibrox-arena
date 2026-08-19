@@ -1,64 +1,28 @@
-# vibrox-auth
+# vibrox-arena
 
-`vibrox-auth` is the authentication microservice of the **Vibrox** suite.  
-It provides secure JWT generation and validation via gRPC, acting as the identity gatekeeper for other services.
+`vibrox-arena` is the server-authoritative game and bot service for the Vibrox
+Systems Lab. Its first experiment is an unbeatable tic-tac-toe bot using
+minimax. The response exposes search metrics so visitors can inspect the
+algorithm rather than only play against it.
 
----
+## Interfaces
 
-## Features
+- gRPC on `:8100`
+- HTTP health check at `GET :8054/healthz`
 
-- gRPC API for:
-  - Signing new JWTs
-  - Validating existing tokens
-- Secret-based signing strategy (HS256 or configurable)
-- Lightweight and stateless — ideal for microservice auth
+See [`proto/arena.proto`](proto/arena.proto) for the game contract.
 
----
-
-## gRPC Setup
-
-The gRPC service is defined using Protocol Buffers (`token.proto`).  
-To compile the `.proto` file for Node.js:
-
-### Compile Command
+## Development
 
 ```bash
-npx grpc_tools_node_protoc \
-  --js_out=import_style=commonjs,binary:./proto \
-  --grpc_out=grpc_js:./proto \
-  -I ./proto ./proto/token.proto
+go test ./...
+go run ./cmd/server
 ```
 
-> This generates the necessary JS and gRPC client/server code inside the `./proto` directory.
+The service targets Go `1.26.6` and will remain pinned until the planned Go
+`1.27` migration.
 
-**Make sure:**
-
-- You’ve installed the necessary dependencies (see below)
-- Your `.proto` file is placed in `./proto/`
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- `protoc` (Protocol Buffers compiler)
-- `grpc-tools` and `@grpc/grpc-js`
-
-### Install Dependencies
-
-```bash
-npm install
-```
-
-### Run Locally
-
-```bash
-npm run dev
-```
-
-OR
-
-```bash
-node index.js
-```
+The service is stateless: each request carries the board before the human move.
+Arena validates the board and move, applies the move, calculates the bot reply,
+and returns the resulting board with minimax metrics. Durable match state can be
+introduced later only if a concrete experiment requires it.

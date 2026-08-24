@@ -1,6 +1,6 @@
 module github.com/VibuRoshin25/vibrox-arena
 
-go 1.26.6
+go 1.27.0
 
 require (
 	google.golang.org/grpc v1.83.1
